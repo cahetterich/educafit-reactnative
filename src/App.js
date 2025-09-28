@@ -7,6 +7,8 @@ import {
   SafeAreaView,
   useWindowDimensions,
   Switch,
+  Platform,
+  StatusBar,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -75,6 +77,7 @@ function NavBar({ routeName, navigation }) {
   const { width } = useWindowDimensions();
   const isMobile = width < 768;
   const [open, setOpen] = React.useState(false);
+  const topInset = Platform.OS === "android" ? (StatusBar.currentHeight || 0) : 0;
 
   const links = [
     [t("nav.home"), "Home"],
@@ -150,7 +153,7 @@ function NavBar({ routeName, navigation }) {
         backgroundColor: colors.card,
       }}
     >
-      <SafeAreaView>
+      <SafeAreaView style={{ paddingTop: topInset }}>
         <Container>
           <View
             style={{
